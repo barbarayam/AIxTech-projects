@@ -2,6 +2,7 @@ import type { Router } from 'express';
 import { Router as createRouter } from 'express';
 import {
   createLocation,
+  deleteLocation,
   getLocation,
   listLocations,
   updateWeather,
@@ -103,6 +104,25 @@ export function createLocationsRouter(options: LocationsRouterOptions = {}): Rou
         response.status(502).json({ detail: error.message });
         return;
       }
+      next(error);
+    }
+  });
+
+  router.delete('/locations/:locationId', async (request, response, next) => {
+    try {
+      const locationId = Number(request.params.locationId);
+      if (Number.isNaN(locationId)) {
+        response.status(422).json({ detail: 'locationId must be a number' });
+        return;
+      }
+      const deleted = await deleteLocation(locationId);
+      if (!deleted) {
+        response.status(404).json({ detail: 'Location not found' });
+        return;
+      }
+      logger.info({ locationId }, 'location deleted');
+      response.status(204).end();
+    } catch (error) {
       next(error);
     }
   });

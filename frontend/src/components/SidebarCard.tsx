@@ -10,8 +10,9 @@ interface SidebarCardProps {
 }
 
 export function SidebarCard({ location, isHome }: SidebarCardProps) {
-  const { selectedId, select } = useStore();
+  const { selectedId, select, remove, deletingId } = useStore();
   const isSelected = selectedId === location.id;
+  const isDeleting = deletingId === location.id;
   const observed = formatTime(location.weather.observed_at);
   const area =
     location.weather.area || `${location.latitude.toFixed(3)}, ${location.longitude.toFixed(3)}`;
@@ -28,6 +29,12 @@ export function SidebarCard({ location, isHome }: SidebarCardProps) {
       onSelect();
     }
   };
+
+  const onDelete = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    void remove(location.id);
+  };
+
   return (
     <div
       role="button"
@@ -41,6 +48,26 @@ export function SidebarCard({ location, isHome }: SidebarCardProps) {
           : 'border-white/10 bg-white/[0.07] hover:bg-white/[0.12]'
       }`}
     >
+      {/* Delete button */}
+      <button
+        type="button"
+        aria-label={`Delete ${area}`}
+        disabled={isDeleting}
+        onClick={onDelete}
+        className="absolute right-2 top-2 z-10 flex h-5 w-5 items-center justify-center rounded-full text-white/40 transition hover:bg-white/20 hover:text-white/90 disabled:opacity-40"
+      >
+        {isDeleting ? (
+          <svg className="h-3 w-3 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
+          </svg>
+        ) : (
+          <svg className="h-3 w-3" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+          </svg>
+        )}
+      </button>
+
       <div className="flex items-start justify-between gap-3 px-4 pt-3">
         <div className="min-w-0">
           <div className="truncate text-lg font-semibold leading-tight text-white">{area}</div>
