@@ -167,6 +167,25 @@ Add a `DELETE /api/locations/:id` endpoint and a delete button to each card in `
 | Backend  | New DELETE endpoint for saved locations |
 | Frontend | Delete button in `SidebarCard.tsx`      |
 
+<details>
+<summary>Implementation notes</summary>
+
+The weather app let users add locations but had no way to remove them. The delete-location feature was added across every layer of the stack.
+
+**Backend**
+
+A `deleteLocation(id)` helper was added to `db.ts`. It looks up the location by ID and removes it, returning `true` on success and `false` if the record was not found. The Express router (`routes/locations.ts`) received a new `DELETE /api/locations/:id` endpoint that calls the helper and returns the appropriate HTTP status — `204 No Content` on success, `404` if the location does not exist, and `422` if the ID is not a valid number.
+
+**Frontend**
+
+The API client (`api.ts`) was extended with a `deleteLocation` function that calls the new endpoint. The central state store (`store.tsx`) received a `remove` action that calls the API and immediately removes the location from local state without waiting for a server round-trip (optimistic update). If the deleted location was the one currently selected, selection automatically moves to the next location in the list.
+
+**UI**
+
+A small `×` button was added to the top-right corner of each location card (`SidebarCard.tsx`). Clicking it triggers the delete without also selecting the card — the click event is stopped from bubbling up to the card's selection handler. While the delete is in flight, the `×` swaps for a spinner to give the user visual feedback. The button also carries an accessible `aria-label` for screen readers.
+
+</details>
+
 ### 2. Geolocation + auto-detect
 
 Add a "Use my location" button that detects the user's position, finds the nearest Singapore forecast area, and adds it automatically. Works on local development origins; if you need HTTPS, run Portless with `PORTLESS_HTTPS=1`.
