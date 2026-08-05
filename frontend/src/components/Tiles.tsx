@@ -1,4 +1,4 @@
-import { CloudIcon, DropletIcon, SunIcon, ThermometerIcon, TrendIcon, WindIcon } from './icons';
+import { CloudIcon, DropletIcon, MoonIcon, SunIcon, ThermometerIcon, TrendIcon, WindIcon } from './icons';
 import type { ReactNode } from 'react';
 import type { WeatherSnapshot } from '../types';
 
@@ -244,9 +244,87 @@ export function AveragesTile({ weather }: WeatherProps) {
   );
 }
 
+interface ConditionStyle {
+  icon: ReactNode;
+  accent: string;
+}
+
+function conditionStyle(condition: string | null): ConditionStyle {
+  const text = (condition ?? '').toLowerCase();
+  if (text.includes('thunder')) {
+    return {
+      icon: <CloudIcon className="h-10 w-10 text-yellow-300/80" />,
+      accent: 'text-yellow-300',
+    };
+  }
+  if (text.includes('heavy rain') || text.includes('moderate rain')) {
+    return {
+      icon: <DropletIcon className="h-10 w-10 text-sky-300/80" />,
+      accent: 'text-sky-300',
+    };
+  }
+  if (text.includes('shower') || text.includes('rain') || text.includes('drizzle')) {
+    return {
+      icon: <DropletIcon className="h-10 w-10 text-sky-200/80" />,
+      accent: 'text-sky-200',
+    };
+  }
+  if (text.includes('night') || text.includes('overcast')) {
+    return {
+      icon: <MoonIcon className="h-10 w-10 text-indigo-200/70" />,
+      accent: 'text-indigo-200',
+    };
+  }
+  if (text.includes('fair') || text.includes('sunny') || text.includes('hot')) {
+    return {
+      icon: <SunIcon className="h-10 w-10 text-amber-300/80" />,
+      accent: 'text-amber-300',
+    };
+  }
+  // cloudy / partly cloudy / windy / hazy / default
+  return {
+    icon: <CloudIcon className="h-10 w-10 text-white/50" />,
+    accent: 'text-white/70',
+  };
+}
+
+export function ConditionTile({ weather }: WeatherProps) {
+  const condition = weather?.condition ?? null;
+  const area = weather?.area ?? null;
+  const validPeriod = weather?.valid_period_text ?? null;
+  const { icon, accent } = conditionStyle(condition);
+
+  return (
+    <TileShell
+      icon={<CloudIcon className="h-3.5 w-3.5" />}
+      title="Condition"
+      className="col-span-2"
+    >
+      <div className="flex items-center gap-4">
+        <div className="shrink-0">{icon}</div>
+        <div className="min-w-0">
+          <div className={`text-2xl font-light leading-tight ${accent}`}>
+            {condition ?? 'Unavailable'}
+          </div>
+          {area && (
+            <div className="mt-1 truncate text-sm text-white/70">{area}</div>
+          )}
+        </div>
+      </div>
+      {validPeriod && (
+        <p className="mt-3 text-xs leading-snug text-white/55">{validPeriod}</p>
+      )}
+      {!validPeriod && (
+        <p className="mt-3 text-xs leading-snug text-white/55">2-hour area forecast.</p>
+      )}
+    </TileShell>
+  );
+}
+
 export function TileGrid({ weather }: WeatherProps) {
   return (
     <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <ConditionTile weather={weather} />
       <AirQualityTile weather={weather} />
       <WindTile weather={weather} />
       <UVTile weather={weather} />

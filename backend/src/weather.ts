@@ -181,10 +181,48 @@ export class SingaporeWeatherClient {
   ) {}
 
   async getCurrentWeather(latitude: number, longitude: number): Promise<WeatherSnapshot> {
-    const forecastPayload = await this.fetchLatestForecastPayload().catch(() => null);
-    return forecastPayload
+    // Run independent groups in parallel, but stagger station-reading calls within
+    // each group to avoid hitting the unauthenticated rate limit (HTTP 429).
+    const [
+      forecastPayload,
+      twentyFourHourResult,
+      fourDayResult,
+      uvResult,
+      stationResults,
+      airQualityResult,
+    ] = await Promise.all([
+      this.fetchLatestForecastPayload().catch(() => null),
+      this.fetchTwentyFourHourForecast(latitude, longitude).catch(() => ({ low: null, high: null, periods: [], timestamp: null })),
+      this.fetchFourDayForecast().catch(() => ({ days: [], timestamp: null })),
+      this.fetchUvIndex().catch(() => ({ value: null, timestamp: null })),
+      // Station reads are serialised to avoid 429s on the unauthenticated tier
+      this.fetchStationReadingsSequential(latitude, longitude),
+      this.fetchAirQuality(latitude, longitude).catch(() => ({ psi: null, pm25: null, region: null, timestamp: null })),
+    ]);
+
+    const [temperatureResult, humidityResult, rainfallResult, windSpeedResult, windDirectionResult] =
+      stationResults;
+
+    const base = forecastPayload
       ? this.snapshotFromPayload(forecastPayload, latitude, longitude)
       : this.emptyForecastSnapshot();
+
+    return {
+      ...base,
+      temperature_c: temperatureResult.value,
+      humidity_percent: humidityResult.value,
+      rainfall_mm: rainfallResult.value,
+      wind_speed_knots: windSpeedResult.value,
+      wind_direction_degrees: windDirectionResult.value,
+      uv_index: uvResult.value,
+      psi_twenty_four_hourly: airQualityResult.psi,
+      pm25_one_hourly: airQualityResult.pm25,
+      air_quality_region: airQualityResult.region,
+      forecast_low_c: twentyFourHourResult.low,
+      forecast_high_c: twentyFourHourResult.high,
+      forecast_periods: twentyFourHourResult.periods,
+      daily_forecast: fourDayResult.days,
+    };
   }
 
   async fetchLatestForecastPayload(): Promise<ForecastPayload> {
@@ -229,6 +267,28 @@ export class SingaporeWeatherClient {
 
   async fetchReadingPayload(endpoint: string): Promise<ReadingPayload> {
     return this.fetchJson(`${this.apiBaseUrl()}/v2/real-time/api/${endpoint}`);
+  }
+
+  private async fetchStationReadingsSequential(
+    latitude: number,
+    longitude: number,
+  ): Promise<Array<{ value: number | null; timestamp: string | null }>> {
+    const endpoints = [
+      'air-temperature',
+      'relative-humidity',
+      'rainfall',
+      'wind-speed',
+      'wind-direction',
+    ] as const;
+
+    const results: Array<{ value: number | null; timestamp: string | null }> = [];
+    for (const endpoint of endpoints) {
+      const result = await this.fetchNearestReading(endpoint, latitude, longitude).catch(
+        () => ({ value: null, timestamp: null }),
+      );
+      results.push(result);
+    }
+    return results;
   }
 
   async fetchUvIndex(): Promise<{ value: number | null; timestamp: string | null }> {
@@ -341,7 +401,7 @@ export class SingaporeWeatherClient {
     return 'https://api.data.gov.sg';
   }
 
-  private async fetchJson<T>(url: string): Promise<T> {
+  private async fetchJson<T>(url: string, attempt = 1): Promise<T> {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), this.options.timeoutMs ?? 8000);
 
@@ -357,6 +417,11 @@ export class SingaporeWeatherClient {
 
       if (!response.ok) {
         if (response.status === 429) {
+          if (attempt <= 3) {
+            const delay = attempt * 1000;
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            return this.fetchJson<T>(url, attempt + 1);
+          }
           throw new WeatherProviderError('Weather provider rate limit reached (HTTP 429)');
         }
         if (response.status === 401 || response.status === 403) {

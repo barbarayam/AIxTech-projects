@@ -3,6 +3,7 @@ import { spawn } from "node:child_process";
 const nodeOptions = [
     process.env.NODE_OPTIONS,
     "--disable-warning=ExperimentalWarning",
+    "--use-system-ca",
 ]
     .filter(Boolean)
     .join(" ");
