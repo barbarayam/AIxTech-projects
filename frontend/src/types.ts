@@ -64,3 +64,14 @@ export interface StoreValue {
 export interface ProviderProps {
   children: ReactNode;
 }
+
+export interface ThemeDefinition {
+  id: string;
+  name: string;
+}
+
+export interface ThemeValue {
+  themeId: string;
+  themes: ThemeDefinition[];
+  setThemeId: (id: string) => void;
+}

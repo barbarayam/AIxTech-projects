@@ -41,3 +41,36 @@ input:focus-visible {
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* Aurora Glass theme — aurora-borealis glow (teal/violet/sky-blue) over a deep indigo night sky.
+   Frosted-glass cards, typography, and layout are unchanged from the default (Apple) theme;
+   only the background, label letter-spacing, and accent tints below differ. */
+[data-theme='aurora-glass'] body {
+  background:
+    radial-gradient(140% 90% at 15% -10%, rgba(45, 212, 191, 0.32) 0%, transparent 55%),
+    radial-gradient(120% 90% at 85% 0%, rgba(129, 140, 248, 0.38) 0%, transparent 55%),
+    radial-gradient(100% 80% at 50% 100%, rgba(56, 189, 248, 0.22) 0%, transparent 60%),
+    linear-gradient(170deg, #1e1b4b 0%, #2a2a5c 30%, #26314f 65%, #1b2436 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+[data-theme='aurora-glass'] .tracking-\[0\.14em\] {
+  letter-spacing: 0.22em;
+}
+
+[data-theme='aurora-glass'] .tracking-\[0\.18em\] {
+  letter-spacing: 0.26em;
+}
+
+[data-theme='aurora-glass'] .border-white\/30 {
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+[data-theme='aurora-glass'] .bg-white\/20 {
+  background-color: rgba(56, 189, 248, 0.16);
+}
+
+[data-theme='aurora-glass'] .ring-white\/40 {
+  --tw-ring-color: rgba(56, 189, 248, 0.55);
+}
