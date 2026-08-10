@@ -26,7 +26,7 @@ Each saved location displays a full weather dashboard:
 | Layer | Tools |
 |---|---|
 | Backend | Node.js 24, TypeScript, Express |
-| Frontend | React 18, Vite 7, Tailwind CSS 3 |
+| Frontend | React 18, Vite 7, Tailwind CSS 3, Leaflet / React Leaflet (map card) |
 | Database | SQLite via Drizzle ORM (`backend/weather.db`) |
 | Dev URL | [Portless](https://portless.dev) named `.localhost` URL |
 | External APIs | data.gov.sg (`api-open.data.gov.sg`, `api.data.gov.sg`) |
@@ -175,7 +175,8 @@ AIxTech-projects/
 │       ├── api.ts                  # fetch wrappers for /api/*
 │       ├── types.ts                # Shared TypeScript interfaces
 │       ├── state/
-│       │   └── store.tsx           # React context state store
+│       │   ├── store.tsx           # React context state store
+│       │   └── theme.tsx           # Theme selection state, persisted to localStorage
 │       └── components/
 │           ├── Layout.tsx          # App shell
 │           ├── Sidebar.tsx         # Location list panel
@@ -184,6 +185,8 @@ AIxTech-projects/
 │           ├── HourlyStrip.tsx     # 6-hourly forecast strip
 │           ├── TenDayForecast.tsx  # 4-day forecast list
 │           ├── Tiles.tsx           # Dashboard metric tiles
+│           ├── MapCard.tsx         # Dashboard map card + fullscreen map view
+│           ├── ThemeSelector.tsx   # Top-right theme dropdown
 │           ├── AddLocationForm.tsx # Add location form
 │           ├── format.ts           # Date/temp formatting helpers
 │           └── icons.tsx           # SVG icon components
@@ -295,3 +298,16 @@ Support drag-to-reorder, a pinned primary location, and swipe gestures on mobile
 |---|---|
 | Backend | Persist sort order and primary flag |
 | Frontend | Drag-and-drop sidebar, swipeable cards on mobile |
+
+### 8. Map card and theme selector ✅
+
+An Apple Weather-style map card on the dashboard, plus a theme selector in the top right.
+
+<details>
+<summary>Implementation notes</summary>
+
+**Map card** — `leaflet` and `react-leaflet` were already listed as dependencies but unused anywhere in the codebase. `MapCard.tsx` wires them up: every saved location renders as a custom `L.divIcon` pin (a temperature pill above a dot, not the Leaflet default marker — sidesteps the default-marker-breaks-under-Vite issue entirely). Clicking a pin calls the same `select(id)` action the sidebar uses, so pin selection, the sidebar highlight, and the Hero detail view stay in sync through the existing store. The card renders a real map with panning/zooming disabled (pins stay clickable without hijacking page scroll); clicking the card or its "Expand" button opens a fullscreen `MapContainer` via a `createPortal` overlay, with full pan/zoom, Escape-to-close, and a close button. Tiles come from CARTO's free Voyager basemap. Locations can only be added through the existing "Add Location" flow — nothing on the map creates one.
+
+**Theme selector** — `state/theme.tsx` adds a `ThemeProvider`/`useTheme()` context, mirroring the existing `state/store.tsx` pattern, that tracks the selected theme, persists it to `localStorage`, and sets a `data-theme` attribute on `<html>`. `ThemeSelector.tsx` is a small dropdown pinned to the top right. Two themes are registered so far: `apple` (the original look, unchanged) and `aurora-glass` (a deep indigo/violet gradient with sky-blue accents and wider label letter-spacing). Themes are layered in purely through scoped CSS in `index.css` (`[data-theme="..."] { ... }`), so adding another is just a new CSS block plus a `THEMES` registry entry — no component changes required.
+
+</details>
