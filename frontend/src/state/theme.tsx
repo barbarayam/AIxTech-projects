@@ -5,6 +5,7 @@ import type { ProviderProps, ThemeDefinition, ThemeValue } from '../types';
 export const THEMES: ThemeDefinition[] = [
   { id: 'apple', name: 'Apple' },
   { id: 'aurora-glass', name: 'Aurora Glass' },
+  { id: 'nordic-frost', name: 'Nordic Frost' },
 ];
 
 const DEFAULT_THEME_ID = THEMES[0].id;
