@@ -95,7 +95,11 @@ export async function getLocation(id: number): Promise<LocationRecord | null> {
 }
 
 export async function deleteLocation(id: number): Promise<boolean> {
-  const existing = await db.select({ id: locations.id }).from(locations).where(eq(locations.id, id)).get();
+  const existing = await db
+    .select({ id: locations.id })
+    .from(locations)
+    .where(eq(locations.id, id))
+    .get();
   if (!existing) return false;
   await db.delete(locations).where(eq(locations.id, id)).run();
   return true;

@@ -13,22 +13,22 @@ Run `npm run db:generate` after changing `schema.ts`, then `npm run db:migrate` 
 
 Defined in `frontend/src/types.ts`. One object per location, written atomically on refresh:
 
-| Field | Source endpoint | Notes |
-|---|---|---|
-| `condition` | `two-hr-forecast` | Forecast text for nearest area |
-| `area` | `two-hr-forecast` | Area name |
-| `valid_period_text` | `two-hr-forecast` | e.g. "6pm to 8pm" |
-| `temperature_c` | `air-temperature` | Nearest station |
-| `humidity_percent` | `relative-humidity` | Nearest station |
-| `rainfall_mm` | `rainfall` | Nearest station |
-| `wind_speed_knots` | `wind-speed` | Nearest station |
-| `wind_direction_degrees` | `wind-direction` | Nearest station |
-| `uv_index` | `uv` | Nationwide, 7am–7pm only |
-| `psi_twenty_four_hourly` | `psi` | Nearest region |
-| `pm25_one_hourly` | `pm25` | Nearest region |
-| `forecast_low_c` / `forecast_high_c` | `twenty-four-hr-forecast` | Today's temps |
-| `forecast_periods` | `twenty-four-hr-forecast` | 6-hourly condition periods |
-| `daily_forecast[]` | `4-day-weather-forecast` | 4-day outlook |
+| Field                                | Source endpoint           | Notes                          |
+| ------------------------------------ | ------------------------- | ------------------------------ |
+| `condition`                          | `two-hr-forecast`         | Forecast text for nearest area |
+| `area`                               | `two-hr-forecast`         | Area name                      |
+| `valid_period_text`                  | `two-hr-forecast`         | e.g. "6pm to 8pm"              |
+| `temperature_c`                      | `air-temperature`         | Nearest station                |
+| `humidity_percent`                   | `relative-humidity`       | Nearest station                |
+| `rainfall_mm`                        | `rainfall`                | Nearest station                |
+| `wind_speed_knots`                   | `wind-speed`              | Nearest station                |
+| `wind_direction_degrees`             | `wind-direction`          | Nearest station                |
+| `uv_index`                           | `uv`                      | Nationwide, 7am–7pm only       |
+| `psi_twenty_four_hourly`             | `psi`                     | Nearest region                 |
+| `pm25_one_hourly`                    | `pm25`                    | Nearest region                 |
+| `forecast_low_c` / `forecast_high_c` | `twenty-four-hr-forecast` | Today's temps                  |
+| `forecast_periods`                   | `twenty-four-hr-forecast` | 6-hourly condition periods     |
+| `daily_forecast[]`                   | `4-day-weather-forecast`  | 4-day outlook                  |
 
 ## data.gov.sg API
 

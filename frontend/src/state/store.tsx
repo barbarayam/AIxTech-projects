@@ -95,36 +95,33 @@ export function StoreProvider({ children }: ProviderProps) {
     [load],
   );
 
-  const remove = useCallback(
-    async (id: number) => {
-      setDeletingId(id);
-      setError(null);
-      logInteraction('location_delete_clicked', { locationId: id });
-      try {
-        await deleteLocation(id);
-        // Optimistically drop from local state, then sync with server
-        setLocations((prev) => {
-          const next = prev.filter((l) => l.id !== id);
-          // If we just removed the selected location, move selection to the first remaining one
-          setSelectedId((current) => {
-            if (current !== id) return current;
-            return next.length > 0 ? next[0].id : null;
-          });
-          return next;
+  const remove = useCallback(async (id: number) => {
+    setDeletingId(id);
+    setError(null);
+    logInteraction('location_delete_clicked', { locationId: id });
+    try {
+      await deleteLocation(id);
+      // Optimistically drop from local state, then sync with server
+      setLocations((prev) => {
+        const next = prev.filter((l) => l.id !== id);
+        // If we just removed the selected location, move selection to the first remaining one
+        setSelectedId((current) => {
+          if (current !== id) return current;
+          return next.length > 0 ? next[0].id : null;
         });
-        logInteraction('location_deleted', { locationId: id });
-      } catch (err) {
-        setError(err);
-        logInteraction('location_delete_failed', {
-          locationId: id,
-          error: err instanceof Error ? err.message : 'Unknown error',
-        });
-      } finally {
-        setDeletingId(null);
-      }
-    },
-    [],
-  );
+        return next;
+      });
+      logInteraction('location_deleted', { locationId: id });
+    } catch (err) {
+      setError(err);
+      logInteraction('location_delete_failed', {
+        locationId: id,
+        error: err instanceof Error ? err.message : 'Unknown error',
+      });
+    } finally {
+      setDeletingId(null);
+    }
+  }, []);
 
   const value: StoreValue = {
     locations,

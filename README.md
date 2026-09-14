@@ -8,28 +8,28 @@ A full-stack Singapore weather dashboard built with Node/Express, React/Vite, an
 
 Each saved location displays a full weather dashboard:
 
-| Card | Data | Source endpoint |
-|---|---|---|
-| **Condition** | 2-hour area forecast text + valid period | `/two-hr-forecast` |
-| **Temperature** | Real-time °C from nearest weather station | `/air-temperature` |
-| **Humidity** | Real-time % from nearest weather station | `/relative-humidity` |
-| **Rainfall** | Real-time mm from nearest weather station | `/rainfall` |
-| **Wind** | Speed (km/h) + compass direction | `/wind-speed` + `/wind-direction` |
-| **UV Index** | Nationwide UVI reading (7am–7pm) | `/uv` |
-| **Air Quality** | PSI (24-hr) + PM2.5 (1-hr) by nearest region | `/psi` + `/pm25` |
-| **Forecast High** | Today's high from the 24-hr forecast | `/twenty-four-hr-forecast` |
-| **Hourly Strip** | 6-hourly condition periods for the day | `/twenty-four-hr-forecast` |
-| **4-Day Forecast** | Daily high/low temps + outlook text | `/4-day-weather-forecast` |
+| Card               | Data                                         | Source endpoint                   |
+| ------------------ | -------------------------------------------- | --------------------------------- |
+| **Condition**      | 2-hour area forecast text + valid period     | `/two-hr-forecast`                |
+| **Temperature**    | Real-time °C from nearest weather station    | `/air-temperature`                |
+| **Humidity**       | Real-time % from nearest weather station     | `/relative-humidity`              |
+| **Rainfall**       | Real-time mm from nearest weather station    | `/rainfall`                       |
+| **Wind**           | Speed (km/h) + compass direction             | `/wind-speed` + `/wind-direction` |
+| **UV Index**       | Nationwide UVI reading (7am–7pm)             | `/uv`                             |
+| **Air Quality**    | PSI (24-hr) + PM2.5 (1-hr) by nearest region | `/psi` + `/pm25`                  |
+| **Forecast High**  | Today's high from the 24-hr forecast         | `/twenty-four-hr-forecast`        |
+| **Hourly Strip**   | 6-hourly condition periods for the day       | `/twenty-four-hr-forecast`        |
+| **4-Day Forecast** | Daily high/low temps + outlook text          | `/4-day-weather-forecast`         |
 
 ## Tech Stack
 
-| Layer | Tools |
-|---|---|
-| Backend | Node.js 24, TypeScript, Express |
-| Frontend | React 18, Vite 7, Tailwind CSS 3, Leaflet / React Leaflet (map card) |
-| Database | SQLite via Drizzle ORM (`backend/weather.db`) |
-| Dev URL | [Portless](https://portless.dev) named `.localhost` URL |
-| External APIs | data.gov.sg (`api-open.data.gov.sg`, `api.data.gov.sg`) |
+| Layer         | Tools                                                                |
+| ------------- | -------------------------------------------------------------------- |
+| Backend       | Node.js 24, TypeScript, Express                                      |
+| Frontend      | React 18, Vite 7, Tailwind CSS 3, Leaflet / React Leaflet (map card) |
+| Database      | SQLite via Drizzle ORM (`backend/weather.db`)                        |
+| Dev URL       | [Portless](https://portless.dev) named `.localhost` URL              |
+| External APIs | data.gov.sg (`api-open.data.gov.sg`, `api.data.gov.sg`)              |
 
 ## Architecture
 
@@ -96,14 +96,14 @@ npm run db:migrate   # Apply Drizzle migrations to backend/weather.db
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/health` | Health check |
-| `GET` | `/api/locations` | List all saved locations with cached weather |
-| `POST` | `/api/locations` | Add a location and immediately fetch weather |
-| `GET` | `/api/locations/:id` | Get a single location |
-| `POST` | `/api/locations/:id/refresh` | Re-fetch live weather from data.gov.sg |
-| `DELETE` | `/api/locations/:id` | Remove a saved location |
+| Method   | Endpoint                     | Description                                  |
+| -------- | ---------------------------- | -------------------------------------------- |
+| `GET`    | `/health`                    | Health check                                 |
+| `GET`    | `/api/locations`             | List all saved locations with cached weather |
+| `POST`   | `/api/locations`             | Add a location and immediately fetch weather |
+| `GET`    | `/api/locations/:id`         | Get a single location                        |
+| `POST`   | `/api/locations/:id/refresh` | Re-fetch live weather from data.gov.sg       |
+| `DELETE` | `/api/locations/:id`         | Remove a saved location                      |
 
 **Add a location** (coordinates must be within Singapore):
 
@@ -206,19 +206,19 @@ Base URL: `https://api-open.data.gov.sg` (v2) · `https://api.data.gov.sg` (v1 l
 
 All endpoints are free. An optional `x-api-key` header raises rate limits.
 
-| Endpoint | Used for | Update frequency |
-|---|---|---|
-| `GET /v2/real-time/api/two-hr-forecast` | Condition text, area name | Every 30 min |
-| `GET /v2/real-time/api/air-temperature` | Temperature (nearest station) | ~1 min |
-| `GET /v2/real-time/api/relative-humidity` | Humidity (nearest station) | ~1 min |
-| `GET /v2/real-time/api/rainfall` | Rainfall (nearest station) | ~1 min |
-| `GET /v2/real-time/api/wind-speed` | Wind speed (nearest station) | ~1 min |
-| `GET /v2/real-time/api/wind-direction` | Wind direction (nearest station) | ~1 min |
-| `GET /v2/real-time/api/uv` | UV index (nationwide) | Hourly, 7am–7pm |
-| `GET /v2/real-time/api/psi` | PSI by region | Hourly |
-| `GET /v2/real-time/api/pm25` | PM2.5 by region | Hourly |
-| `GET /v2/real-time/api/twenty-four-hr-forecast` | H/L temps, 6-hourly periods | ~30 min |
-| `GET /v1/environment/4-day-weather-forecast` | 4-day outlook | Twice daily |
+| Endpoint                                        | Used for                         | Update frequency |
+| ----------------------------------------------- | -------------------------------- | ---------------- |
+| `GET /v2/real-time/api/two-hr-forecast`         | Condition text, area name        | Every 30 min     |
+| `GET /v2/real-time/api/air-temperature`         | Temperature (nearest station)    | ~1 min           |
+| `GET /v2/real-time/api/relative-humidity`       | Humidity (nearest station)       | ~1 min           |
+| `GET /v2/real-time/api/rainfall`                | Rainfall (nearest station)       | ~1 min           |
+| `GET /v2/real-time/api/wind-speed`              | Wind speed (nearest station)     | ~1 min           |
+| `GET /v2/real-time/api/wind-direction`          | Wind direction (nearest station) | ~1 min           |
+| `GET /v2/real-time/api/uv`                      | UV index (nationwide)            | Hourly, 7am–7pm  |
+| `GET /v2/real-time/api/psi`                     | PSI by region                    | Hourly           |
+| `GET /v2/real-time/api/pm25`                    | PM2.5 by region                  | Hourly           |
+| `GET /v2/real-time/api/twenty-four-hr-forecast` | H/L temps, 6-hourly periods      | ~30 min          |
+| `GET /v1/environment/4-day-weather-forecast`    | 4-day outlook                    | Twice daily      |
 
 ## Feature Tasks
 
@@ -267,36 +267,36 @@ A dedicated condition tile showing the 2-hour forecast text, area name, and vali
 
 Add a "Use my location" button that detects the user's position and adds the nearest Singapore area automatically.
 
-| Layer | What to do |
-|---|---|
+| Layer    | What to do                                                        |
+| -------- | ----------------------------------------------------------------- |
 | Frontend | New button in `AddLocationForm.tsx` using `navigator.geolocation` |
 
 ### 5. Singapore area picker
 
 Replace manual lat/lon inputs with a searchable dropdown populated from `area_metadata` in the 2-hour forecast response.
 
-| Layer | What to do |
-|---|---|
-| Backend | Expose `GET /api/areas` returning the area list |
-| Frontend | Searchable combobox in `AddLocationForm.tsx` |
+| Layer    | What to do                                      |
+| -------- | ----------------------------------------------- |
+| Backend  | Expose `GET /api/areas` returning the area list |
+| Frontend | Searchable combobox in `AddLocationForm.tsx`    |
 
 ### 6. Location detail page with charts
 
 Add a detail view showing historical readings over time as line charts.
 
-| Layer | What to do |
-|---|---|
-| Backend | Store each refresh as a separate row instead of overwriting the snapshot |
-| Frontend | New route + charts using Recharts or Chart.js |
-| Packages | `react-router-dom`, `recharts` |
+| Layer    | What to do                                                               |
+| -------- | ------------------------------------------------------------------------ |
+| Backend  | Store each refresh as a separate row instead of overwriting the snapshot |
+| Frontend | New route + charts using Recharts or Chart.js                            |
+| Packages | `react-router-dom`, `recharts`                                           |
 
 ### 7. Multi-location management
 
 Support drag-to-reorder, a pinned primary location, and swipe gestures on mobile.
 
-| Layer | What to do |
-|---|---|
-| Backend | Persist sort order and primary flag |
+| Layer    | What to do                                       |
+| -------- | ------------------------------------------------ |
+| Backend  | Persist sort order and primary flag              |
 | Frontend | Drag-and-drop sidebar, swipeable cards on mobile |
 
 ### 8. Map card and theme selector ✅

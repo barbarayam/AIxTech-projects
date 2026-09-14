@@ -76,7 +76,12 @@ export function createLocationsRouter(options: LocationsRouterOptions = {}): Rou
 
   router.get('/locations/:locationId', async (request, response, next) => {
     try {
-      const location = await getLocation(Number(request.params.locationId));
+      const locationId = Number(request.params.locationId);
+      if (Number.isNaN(locationId)) {
+        response.status(422).json({ detail: 'locationId must be a number' });
+        return;
+      }
+      const location = await getLocation(locationId);
       if (!location) {
         response.status(404).json({ detail: 'Location not found' });
         return;
@@ -90,6 +95,10 @@ export function createLocationsRouter(options: LocationsRouterOptions = {}): Rou
   router.post('/locations/:locationId/refresh', async (request, response, next) => {
     try {
       const locationId = Number(request.params.locationId);
+      if (Number.isNaN(locationId)) {
+        response.status(422).json({ detail: 'locationId must be a number' });
+        return;
+      }
       const location = await getLocation(locationId);
       if (!location) {
         response.status(404).json({ detail: 'Location not found' });
@@ -98,6 +107,10 @@ export function createLocationsRouter(options: LocationsRouterOptions = {}): Rou
 
       const snapshot = await weatherClient.getCurrentWeather(location.latitude, location.longitude);
       const updated = await updateWeather(locationId, snapshot);
+      if (!updated) {
+        response.status(404).json({ detail: 'Location not found' });
+        return;
+      }
       response.json(updated);
     } catch (error) {
       if (error instanceof WeatherProviderError) {

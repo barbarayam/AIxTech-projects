@@ -85,7 +85,7 @@ import { chromium } from 'playwright';
 const browser = await chromium.launch();
 const page = await browser.newPage();
 const requests = [];
-page.on('request', req => requests.push({ method: req.method(), url: req.url() }));
+page.on('request', (req) => requests.push({ method: req.method(), url: req.url() }));
 await page.goto('<url>', { waitUntil: 'networkidle' });
 console.log(JSON.stringify(requests, null, 2));
 await browser.close();
