@@ -16,6 +16,7 @@ npm run doctor       # Verify /health and /api/locations are responding
 npm run reset        # Delete backend/weather.db (local SQLite database)
 npm run db:generate  # Regenerate Drizzle migrations after schema changes
 npm run db:migrate   # Apply pending Drizzle migrations
+npm run docs         # Start the Astro Starlight docs dev server (docs/)
 ```
 
 Dev server URL: `http://weather-starter.localhost:1355` (or fallback `http://127.0.0.1:<PORT>` — check terminal output).

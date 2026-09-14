@@ -86,51 +86,119 @@ input:focus-visible {
 }
 
 /* text: map all white shades → dark slate */
-[data-theme='nordic-frost'] .text-white     { color: #1e293b; }
-[data-theme='nordic-frost'] .text-white\/95 { color: #1e293b; }
-[data-theme='nordic-frost'] .text-white\/90 { color: #334155; }
-[data-theme='nordic-frost'] .text-white\/85 { color: #334155; }
-[data-theme='nordic-frost'] .text-white\/80 { color: #475569; }
-[data-theme='nordic-frost'] .text-white\/75 { color: #475569; }
-[data-theme='nordic-frost'] .text-white\/70 { color: #64748b; }
-[data-theme='nordic-frost'] .text-white\/65 { color: #64748b; }
-[data-theme='nordic-frost'] .text-white\/60 { color: #64748b; }
-[data-theme='nordic-frost'] .text-white\/55 { color: #94a3b8; }
-[data-theme='nordic-frost'] .text-white\/50 { color: #94a3b8; }
-[data-theme='nordic-frost'] .text-white\/40 { color: #cbd5e1; }
+[data-theme='nordic-frost'] .text-white {
+  color: #1e293b;
+}
+[data-theme='nordic-frost'] .text-white\/95 {
+  color: #1e293b;
+}
+[data-theme='nordic-frost'] .text-white\/90 {
+  color: #334155;
+}
+[data-theme='nordic-frost'] .text-white\/85 {
+  color: #334155;
+}
+[data-theme='nordic-frost'] .text-white\/80 {
+  color: #475569;
+}
+[data-theme='nordic-frost'] .text-white\/75 {
+  color: #475569;
+}
+[data-theme='nordic-frost'] .text-white\/70 {
+  color: #64748b;
+}
+[data-theme='nordic-frost'] .text-white\/65 {
+  color: #64748b;
+}
+[data-theme='nordic-frost'] .text-white\/60 {
+  color: #64748b;
+}
+[data-theme='nordic-frost'] .text-white\/55 {
+  color: #94a3b8;
+}
+[data-theme='nordic-frost'] .text-white\/50 {
+  color: #94a3b8;
+}
+[data-theme='nordic-frost'] .text-white\/40 {
+  color: #cbd5e1;
+}
 
 /* hover text variants */
-[data-theme='nordic-frost'] .hover\:text-white:hover     { color: #1e293b; }
-[data-theme='nordic-frost'] .hover\:text-white\/90:hover { color: #1e293b; }
+[data-theme='nordic-frost'] .hover\:text-white:hover {
+  color: #1e293b;
+}
+[data-theme='nordic-frost'] .hover\:text-white\/90:hover {
+  color: #1e293b;
+}
 
 /* sidebar */
-[data-theme='nordic-frost'] .bg-black\/20 { background-color: rgba(219, 234, 254, 0.8); }
+[data-theme='nordic-frost'] .bg-black\/20 {
+  background-color: rgba(219, 234, 254, 0.8);
+}
 
 /* frosted glass panels */
-[data-theme='nordic-frost'] .bg-white\/20      { background-color: rgba(255, 255, 255, 0.88); }
-[data-theme='nordic-frost'] .bg-white\/10      { background-color: rgba(203, 213, 225, 0.3); }
-[data-theme='nordic-frost'] .bg-white\/\[0\.1\]  { background-color: rgba(255, 255, 255, 0.65); }
-[data-theme='nordic-frost'] .bg-white\/\[0\.08\] { background-color: rgba(255, 255, 255, 0.62); }
-[data-theme='nordic-frost'] .bg-white\/\[0\.07\] { background-color: rgba(255, 255, 255, 0.55); }
-[data-theme='nordic-frost'] .bg-white\/\[0\.06\] { background-color: rgba(255, 255, 255, 0.5); }
-[data-theme='nordic-frost'] .bg-white\/\[0\.04\] { background-color: rgba(226, 232, 240, 0.5); }
+[data-theme='nordic-frost'] .bg-white\/20 {
+  background-color: rgba(255, 255, 255, 0.88);
+}
+[data-theme='nordic-frost'] .bg-white\/10 {
+  background-color: rgba(203, 213, 225, 0.3);
+}
+[data-theme='nordic-frost'] .bg-white\/\[0\.1\] {
+  background-color: rgba(255, 255, 255, 0.65);
+}
+[data-theme='nordic-frost'] .bg-white\/\[0\.08\] {
+  background-color: rgba(255, 255, 255, 0.62);
+}
+[data-theme='nordic-frost'] .bg-white\/\[0\.07\] {
+  background-color: rgba(255, 255, 255, 0.55);
+}
+[data-theme='nordic-frost'] .bg-white\/\[0\.06\] {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+[data-theme='nordic-frost'] .bg-white\/\[0\.04\] {
+  background-color: rgba(226, 232, 240, 0.5);
+}
 
 /* hover panel states */
-[data-theme='nordic-frost'] .hover\:bg-white\/\[0\.12\]:hover { background-color: rgba(255, 255, 255, 0.78); }
-[data-theme='nordic-frost'] .hover\:bg-white\/\[0\.14\]:hover { background-color: rgba(255, 255, 255, 0.88); }
-[data-theme='nordic-frost'] .hover\:bg-white\/20:hover        { background-color: rgba(255, 255, 255, 0.85); }
+[data-theme='nordic-frost'] .hover\:bg-white\/\[0\.12\]:hover {
+  background-color: rgba(255, 255, 255, 0.78);
+}
+[data-theme='nordic-frost'] .hover\:bg-white\/\[0\.14\]:hover {
+  background-color: rgba(255, 255, 255, 0.88);
+}
+[data-theme='nordic-frost'] .hover\:bg-white\/20:hover {
+  background-color: rgba(255, 255, 255, 0.85);
+}
 
 /* submit button: bg-white/90 on a light bg is invisible — invert to dark */
-[data-theme='nordic-frost'] .bg-white\/90          { background-color: #1e293b; color: white; }
-[data-theme='nordic-frost'] .hover\:bg-white:hover { background-color: #334155; color: white; }
+[data-theme='nordic-frost'] .bg-white\/90 {
+  background-color: #1e293b;
+  color: white;
+}
+[data-theme='nordic-frost'] .hover\:bg-white:hover {
+  background-color: #334155;
+  color: white;
+}
 
 /* borders */
-[data-theme='nordic-frost'] .border-white\/5  { border-color: rgba(148, 163, 184, 0.1); }
-[data-theme='nordic-frost'] .border-white\/10 { border-color: rgba(148, 163, 184, 0.2); }
-[data-theme='nordic-frost'] .border-white\/15 { border-color: rgba(148, 163, 184, 0.3); }
-[data-theme='nordic-frost'] .border-white\/20 { border-color: rgba(148, 163, 184, 0.35); }
-[data-theme='nordic-frost'] .border-white\/30 { border-color: rgba(100, 116, 139, 0.5); }
-[data-theme='nordic-frost'] .border-white     { border-color: #94a3b8; }
+[data-theme='nordic-frost'] .border-white\/5 {
+  border-color: rgba(148, 163, 184, 0.1);
+}
+[data-theme='nordic-frost'] .border-white\/10 {
+  border-color: rgba(148, 163, 184, 0.2);
+}
+[data-theme='nordic-frost'] .border-white\/15 {
+  border-color: rgba(148, 163, 184, 0.3);
+}
+[data-theme='nordic-frost'] .border-white\/20 {
+  border-color: rgba(148, 163, 184, 0.35);
+}
+[data-theme='nordic-frost'] .border-white\/30 {
+  border-color: rgba(100, 116, 139, 0.5);
+}
+[data-theme='nordic-frost'] .border-white {
+  border-color: #94a3b8;
+}
 
 /* dividers */
 [data-theme='nordic-frost'] .divide-white\/5 > :not([hidden]) ~ :not([hidden]) {
@@ -138,19 +206,33 @@ input:focus-visible {
 }
 
 /* placeholders */
-[data-theme='nordic-frost'] .placeholder\:text-white\/50::placeholder { color: #94a3b8; }
-[data-theme='nordic-frost'] .placeholder\:text-white\/40::placeholder { color: #cbd5e1; }
+[data-theme='nordic-frost'] .placeholder\:text-white\/50::placeholder {
+  color: #94a3b8;
+}
+[data-theme='nordic-frost'] .placeholder\:text-white\/40::placeholder {
+  color: #cbd5e1;
+}
 
 /* focus rings */
-[data-theme='nordic-frost'] .ring-white\/40          { --tw-ring-color: rgba(99, 149, 237, 0.55); }
-[data-theme='nordic-frost'] .focus\:ring-white\/30:focus { --tw-ring-color: rgba(99, 149, 237, 0.45); }
+[data-theme='nordic-frost'] .ring-white\/40 {
+  --tw-ring-color: rgba(99, 149, 237, 0.55);
+}
+[data-theme='nordic-frost'] .focus\:ring-white\/30:focus {
+  --tw-ring-color: rgba(99, 149, 237, 0.45);
+}
 
 /* letter-spacing: slightly wider for airy Nordic feel */
-[data-theme='nordic-frost'] .tracking-\[0\.14em\] { letter-spacing: 0.18em; }
-[data-theme='nordic-frost'] .tracking-\[0\.18em\] { letter-spacing: 0.22em; }
+[data-theme='nordic-frost'] .tracking-\[0\.14em\] {
+  letter-spacing: 0.18em;
+}
+[data-theme='nordic-frost'] .tracking-\[0\.18em\] {
+  letter-spacing: 0.22em;
+}
 
 /* fullscreen map overlay */
-[data-theme='nordic-frost'] .bg-slate-950\/85 { background-color: rgba(248, 250, 252, 0.94); }
+[data-theme='nordic-frost'] .bg-slate-950\/85 {
+  background-color: rgba(248, 250, 252, 0.94);
+}
 
 /* scrollbar */
 [data-theme='nordic-frost'] ::-webkit-scrollbar-thumb {
@@ -158,6 +240,12 @@ input:focus-visible {
 }
 
 /* map pins: keep white text on their dark pill backgrounds — exclude from global text-white override */
-[data-theme='nordic-frost'] .weather-map-pin .text-white      { color: white; }
-[data-theme='nordic-frost'] .weather-map-pin .border-white    { border-color: rgba(255, 255, 255, 0.5); }
-[data-theme='nordic-frost'] .weather-map-pin .border-white\/20 { border-color: rgba(255, 255, 255, 0.2); }
+[data-theme='nordic-frost'] .weather-map-pin .text-white {
+  color: white;
+}
+[data-theme='nordic-frost'] .weather-map-pin .border-white {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+[data-theme='nordic-frost'] .weather-map-pin .border-white\/20 {
+  border-color: rgba(255, 255, 255, 0.2);
+}

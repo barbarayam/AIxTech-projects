@@ -1,0 +1,69 @@
+---
+title: Quickstart
+description: Install dependencies, start the dev server, and add a Singapore location.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+## Prerequisites
+
+- **Node.js 24+.** The backend uses the built-in `node:sqlite` module, and the dev script passes `--use-system-ca`, which needs a recent Node.
+- **npm 10+.** The repo is an npm workspace (`frontend`, `backend`, `docs`).
+
+<Aside type="caution">
+  Run every command from the repository root. The database path, migrations folder, and log file are
+  all resolved relative to the current working directory. See [Caveats & known
+  gaps](/guides/known-gaps/).
+</Aside>
+
+## Run in development
+
+<Steps>
+
+1. Install all workspace dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. _(Optional)_ Create a `.env` file for a data.gov.sg API key. The app works without one, but unauthenticated requests are rate limited.
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Start the dev server:
+
+   ```bash
+   npm run dev
+   ```
+
+   This launches Portless, which runs `tsx watch backend/src/server.ts` and proxies it to a stable name.
+
+4. Open the URL printed in the terminal, usually `http://weather-starter.localhost:1355`.
+
+5. Click **Add Location** in the sidebar and enter coordinates inside Singapore (latitude 1.1–1.5, longitude 103.6–104.1), for example `1.3508`, `103.8390`. You can also use **Use my location** to fill in the fields from the browser's location.
+
+6. The backend fetches weather straight away. Click **Refresh** at the bottom of the dashboard to fetch it again.
+
+</Steps>
+
+## Run a production build
+
+```bash
+npm run build   # vite build for frontend/, tsc for backend/
+npm run start   # NODE_ENV=production node backend/dist/server.js
+npm run doctor  # checks /health and /api/locations on http://127.0.0.1:3000
+```
+
+In production mode the server listens on `127.0.0.1:${PORT}` (default `3000`) and serves `frontend/dist` with an SPA fallback.
+
+## Run these docs
+
+```bash
+npm run docs
+```
+
+The Starlight site starts on `http://localhost:4321`.

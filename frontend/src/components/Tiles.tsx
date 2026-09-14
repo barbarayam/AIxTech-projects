@@ -1,4 +1,12 @@
-import { CloudIcon, DropletIcon, MoonIcon, SunIcon, ThermometerIcon, TrendIcon, WindIcon } from './icons';
+import {
+  CloudIcon,
+  DropletIcon,
+  MoonIcon,
+  SunIcon,
+  ThermometerIcon,
+  TrendIcon,
+  WindIcon,
+} from './icons';
 import type { ReactNode } from 'react';
 import type { WeatherSnapshot } from '../types';
 
@@ -192,7 +200,7 @@ export function UVTile({ weather }: WeatherProps) {
 export function TemperatureTile({ weather }: WeatherProps) {
   return (
     <TileShell icon={<ThermometerIcon />} title="Temperature">
-      <div className="text-4xl font-light leading-none tabular-nums text-white/95">
+      <div className="text-4xl font-light tabular-nums leading-none text-white/95">
         {formatTemperature(weather?.temperature_c)}&deg;
       </div>
       <p className="mt-3 text-xs leading-snug text-white/70">
@@ -205,7 +213,7 @@ export function TemperatureTile({ weather }: WeatherProps) {
 export function PrecipitationTile({ weather }: WeatherProps) {
   return (
     <TileShell icon={<DropletIcon />} title="Rainfall">
-      <div className="text-4xl font-light leading-none tabular-nums text-white/95">
+      <div className="text-4xl font-light tabular-nums leading-none text-white/95">
         {formatNumber(weather?.rainfall_mm, 1)} mm
       </div>
       <div className="mt-1 text-sm text-white/85">Latest reading</div>
@@ -217,7 +225,7 @@ export function PrecipitationTile({ weather }: WeatherProps) {
 export function HumidityTile({ weather }: WeatherProps) {
   return (
     <TileShell icon={<DropletIcon />} title="Humidity">
-      <div className="text-4xl font-light leading-none tabular-nums text-white/95">
+      <div className="text-4xl font-light tabular-nums leading-none text-white/95">
         {formatNumber(weather?.humidity_percent)}%
       </div>
       <p className="mt-3 text-xs leading-snug text-white/70">Nearest realtime humidity station.</p>
@@ -228,7 +236,7 @@ export function HumidityTile({ weather }: WeatherProps) {
 export function AveragesTile({ weather }: WeatherProps) {
   return (
     <TileShell icon={<TrendIcon />} title="Forecast High">
-      <div className="text-4xl font-light leading-none tabular-nums text-white/95">
+      <div className="text-4xl font-light tabular-nums leading-none text-white/95">
         {formatTemperature(weather?.forecast_high_c)}&deg;
       </div>
       <div className="mt-1 text-xs leading-snug text-white/75">
@@ -306,14 +314,10 @@ export function ConditionTile({ weather }: WeatherProps) {
           <div className={`text-2xl font-light leading-tight ${accent}`}>
             {condition ?? 'Unavailable'}
           </div>
-          {area && (
-            <div className="mt-1 truncate text-sm text-white/70">{area}</div>
-          )}
+          {area && <div className="mt-1 truncate text-sm text-white/70">{area}</div>}
         </div>
       </div>
-      {validPeriod && (
-        <p className="mt-3 text-xs leading-snug text-white/55">{validPeriod}</p>
-      )}
+      {validPeriod && <p className="mt-3 text-xs leading-snug text-white/55">{validPeriod}</p>}
       {!validPeriod && (
         <p className="mt-3 text-xs leading-snug text-white/55">2-hour area forecast.</p>
       )}

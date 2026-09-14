@@ -192,16 +192,31 @@ export class SingaporeWeatherClient {
       airQualityResult,
     ] = await Promise.all([
       this.fetchLatestForecastPayload().catch(() => null),
-      this.fetchTwentyFourHourForecast(latitude, longitude).catch(() => ({ low: null, high: null, periods: [], timestamp: null })),
+      this.fetchTwentyFourHourForecast(latitude, longitude).catch(() => ({
+        low: null,
+        high: null,
+        periods: [],
+        timestamp: null,
+      })),
       this.fetchFourDayForecast().catch(() => ({ days: [], timestamp: null })),
       this.fetchUvIndex().catch(() => ({ value: null, timestamp: null })),
       // Station reads are serialised to avoid 429s on the unauthenticated tier
       this.fetchStationReadingsSequential(latitude, longitude),
-      this.fetchAirQuality(latitude, longitude).catch(() => ({ psi: null, pm25: null, region: null, timestamp: null })),
+      this.fetchAirQuality(latitude, longitude).catch(() => ({
+        psi: null,
+        pm25: null,
+        region: null,
+        timestamp: null,
+      })),
     ]);
 
-    const [temperatureResult, humidityResult, rainfallResult, windSpeedResult, windDirectionResult] =
-      stationResults;
+    const [
+      temperatureResult,
+      humidityResult,
+      rainfallResult,
+      windSpeedResult,
+      windDirectionResult,
+    ] = stationResults;
 
     const base = forecastPayload
       ? this.snapshotFromPayload(forecastPayload, latitude, longitude)
@@ -283,9 +298,10 @@ export class SingaporeWeatherClient {
 
     const results: Array<{ value: number | null; timestamp: string | null }> = [];
     for (const endpoint of endpoints) {
-      const result = await this.fetchNearestReading(endpoint, latitude, longitude).catch(
-        () => ({ value: null, timestamp: null }),
-      );
+      const result = await this.fetchNearestReading(endpoint, latitude, longitude).catch(() => ({
+        value: null,
+        timestamp: null,
+      }));
       results.push(result);
     }
     return results;
@@ -623,7 +639,6 @@ function valueForRegion(
   if (!values || !region) return null;
   return numberOrNull(values[region]);
 }
-
 
 function defaultRegions(): RegionMetadata[] {
   return [
