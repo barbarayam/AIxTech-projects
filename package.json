@@ -17,11 +17,13 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "docs": "npm run dev -w docs"
   },
   "workspaces": [
     "frontend",
-    "backend"
+    "backend",
+    "docs"
   ],
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.4",
